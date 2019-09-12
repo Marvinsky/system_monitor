@@ -78,5 +78,5 @@ long int Process::UpTime() {
 
 // TODO: Overload the "less than" comparison operator for Process objects
 bool Process::operator<(Process const& a) const {
-    return (this->pid > a.pid);
+    return (this->pid < a.pid);
 }
