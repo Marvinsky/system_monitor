@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 #include "process.h"
 #include "processor.h"
@@ -15,6 +16,7 @@ using std::size_t;
 using std::string;
 using std::vector;
 using std::cout;
+using std::sort;
 
 // TODO: Return the system's CPU
 Processor& System::Cpu() { return cpu_; }
@@ -31,6 +33,8 @@ vector<Process>& System::Processes() {
         }
     }
     //cout<<"\nprocesses_.size() = "<<processes_.size()<<"\n";
+    //sort
+    sort(processes_.begin(), processes_.end());
     return processes_;
 }
 

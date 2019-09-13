@@ -201,7 +201,7 @@ string LinuxParser::Ram(int pid) {
     }
     char* endptr = NULL;
     long long int size_kb = std::strtoll(value.c_str(), &endptr, 10);
-    size_kb /= 1000;
+    size_kb = float(size_kb/1000);
     std::ostringstream out;
     out<<size_kb;
     return out.str();

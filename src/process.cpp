@@ -52,7 +52,7 @@ float Process::CpuUtilization() {
     float total_time = data[UTIME] + data[STIME] +
             data[CUTIME] + data[CSTIME];
     long int seconds = uptime - (data[STARTTIME]/hertz);
-    float result = 100*((total_time/hertz)/seconds);
+    float result = ((total_time/hertz)/seconds);
     return result;
 }
 

@@ -5,7 +5,6 @@
 #include <fstream>
 
 #include "linux_parser.h"
-//https://github.com/jsoulis/CppND-System-Monitor/blob/master/ProcessParser.h
 
 using std::stoi;
 using std::cout;
@@ -49,5 +48,6 @@ float Processor::Utilization() {
         totalTime = activeTime + idleTime;
         result = activeTime/totalTime;
     }
+
     return result;
 }
