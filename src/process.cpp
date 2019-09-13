@@ -9,6 +9,7 @@
 #include "linux_parser.h"
 #include "process.h"
 
+//In order to avoid namespace issues: https://stackoverflow.com/questions/11271889/global-variable-count-ambiguous
 using std::string;
 using std::to_string;
 using std::vector;
@@ -58,7 +59,8 @@ float Process::CpuUtilization() {
 
 // TODO: Return the command that generated this process
 string Process::Command() {
-    return LinuxParser::Command(pid);
+    string out = LinuxParser::Command(pid);
+    return out.length() > 45 ? out + "..." : out;
 }
 
 // TODO: Return this process's memory utilization
@@ -80,3 +82,9 @@ long int Process::UpTime() {
 bool Process::operator<(Process const& a) const {
     return (this->pid < a.pid);
 }
+/*
+ * somehow it is now working
+bool Process::operator>(Process const& a) const {
+    return (CpuUtilization() > a.CpuUtilization());
+}
+*/

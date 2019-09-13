@@ -29,12 +29,14 @@ vector<Process>& System::Processes() {
         if (process_map.find(pid) == process_map.end()) {
             Process p{pid};
             process_map.insert({pid, p});
-            processes_.push_back(p);
+            processes_.emplace_back(p);
         }
     }
     //cout<<"\nprocesses_.size() = "<<processes_.size()<<"\n";
-    //sort
-    sort(processes_.begin(), processes_.end());
+    //sort - how to do with cpu utilization?
+    sort(processes_.begin(), processes_.end(), [](Process &a, Process &b){
+        return a.CpuUtilization() < b.CpuUtilization();
+    });
     return processes_;
 }
 

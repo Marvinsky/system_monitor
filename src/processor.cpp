@@ -12,42 +12,41 @@ using std::string;
 
 // TODO: Return the aggregate CPU utilization
 float Processor::Utilization() {
-    string str_cpu,
-    str_user,
-    str_nice,
-    str_system,
-    str_idle,
-    str_iowait,
-    str_irq,
-    str_softirq,
-    str_steal,
-    str_guest,
-    str_guest_nice;
+    unsigned int k = 1;
     int user, nice, system, idle, iowait, irq, softirq, steal, guest, guest_nice;
     float activeTime, idleTime, totalTime, result;
-    string line;
+    string tempVariable;
     std::ifstream filestream(LinuxParser::kProcDirectory + LinuxParser::kStatFilename);
     if (filestream.is_open()) {
-        std::getline(filestream, line);
-        std::istringstream linestream(line);
-        linestream>>str_cpu>>str_user>>str_nice>>str_system>>str_idle>>str_iowait>>str_irq>>str_softirq>>str_steal>>str_guest>>str_guest_nice;
-
-        user = stoi(str_user);
-        nice = stoi(str_nice);
-        system = stoi(str_system);
-        idle = stoi(str_idle);
-        iowait = stoi(str_iowait);
-        irq = stoi(str_irq);
-        softirq = stoi(str_softirq);
-        steal = stoi(str_steal);
-        guest = stoi(str_guest);
-        guest_nice = stoi(str_guest_nice);
-
+        while (filestream>>tempVariable) {
+            if (k == 2) {
+                user = stoi(tempVariable);
+            } else if (k == 3) {
+                nice = stoi(tempVariable);
+            } else if (k == 4) {
+                system = stoi(tempVariable);
+            } else if (k == 5) {
+                idle = stoi(tempVariable);
+            } else if (k == 6) {
+                iowait = stoi(tempVariable);
+            } else if (k == 7) {
+                irq = stoi(tempVariable);
+            } else if (k == 8) {
+                softirq = stoi(tempVariable);
+            } else if (k == 9) {
+                steal = stoi(tempVariable);
+            } else if (k == 10) {
+                guest = stoi(tempVariable);
+            } else if (k == 11) {
+                guest_nice = stoi(tempVariable);
+            }
+            k++;
+        }
         activeTime = user + nice + system + irq + softirq + steal + guest + guest_nice;
         idleTime = idle + iowait;
         totalTime = activeTime + idleTime;
         result = activeTime/totalTime;
     }
-
+    filestream.close();
     return result;
 }
