@@ -33,9 +33,9 @@ vector<Process>& System::Processes() {
         }
     }
     //cout<<"\nprocesses_.size() = "<<processes_.size()<<"\n";
-    //sort - how to do with cpu utilization?
+    //sort
     sort(processes_.begin(), processes_.end(), [](Process &a, Process &b){
-        return a.CpuUtilization() < b.CpuUtilization();
+        return a.CpuUtilization() > b.CpuUtilization();
     });
     return processes_;
 }

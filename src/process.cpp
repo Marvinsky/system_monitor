@@ -24,7 +24,7 @@ int Process::Pid() { return pid; }
 // TODO: Return this process's CPU utilization
 float Process::CpuUtilization() {
     string line;
-    int UTIME = 13, STIME = 14, CUTIME = 15, CSTIME = 16, STARTTIME = 20;
+    int UTIME = 14, STIME = 14, CUTIME = 14, CSTIME = 17, STARTTIME = 22;
     //https://stackoverflow.com/questions/1420426/how-to-calculate-the-cpu-usage-of-a-process-by-pid-in-linux-from-c/1424556#1424556
     unordered_map<int, int> data = {
             {UTIME,     0}, //user mode jiffies
@@ -79,12 +79,6 @@ long int Process::UpTime() {
 }
 
 // TODO: Overload the "less than" comparison operator for Process objects
-bool Process::operator<(Process const& a) const {
-    return (this->pid < a.pid);
+bool Process::operator<(Process& a) {
+    return (CpuUtilization() < a.CpuUtilization());
 }
-/*
- * somehow it is now working
-bool Process::operator>(Process const& a) const {
-    return (CpuUtilization() > a.CpuUtilization());
-}
-*/

@@ -256,19 +256,23 @@ string LinuxParser::Uid(int pid) {
     std::ifstream filestream(kProcDirectory + to_string(pid) + kStatusFilename);
     string line;
     string Uid = "";
+    bool isZombieProcess = true;
     for (int lineNum = 1; std::getline(filestream, line); lineNum++) {
         std::stringstream ss(line);
         string word;
-        //std::cout<<"Line # "<<lineNum<<":";
         for (int wordNumb = 1; ss>>word; wordNumb++) {
             if (word == "Uid:") {
                 ss>>Uid;
-                //cout<<wordNumb<<": "<<word<<" Uid: "<<Uid<<"\n";
-                return Uid;
+            } else if (word == "VmData:") {
+                isZombieProcess = false;
             }
         }
     }
     filestream.close();
+    if (!isZombieProcess) {
+        return Uid;
+    }
+
     return Uid;
 }
 
