@@ -14,8 +14,6 @@ using std::to_string;
 using std::vector;
 using std::cout;
 
-//http://www.martinbroadhurst.com/how-to-split-a-string-in-c.html
-
 // DONE: An example of how to read data from the filesystem
 string LinuxParser::OperatingSystem() {
   string line;
@@ -78,7 +76,6 @@ vector<int> LinuxParser::Pids() {
     }
   }
   closedir(directory);
-  //cout<<"pids.size() = "<<pids.size()<<"\n";
   return pids;
 }
 
@@ -108,7 +105,6 @@ float LinuxParser::MemoryUtilization() {
 
 // TODO: Read and return the system uptime
 long LinuxParser::UpTime() {
-  //std::cout<<"Calling UpTime in linux_parser\n";
   string suspendtime, idletime;
   string line;
   std::ifstream stream(kProcDirectory + kUptimeFilename);
@@ -118,9 +114,7 @@ long LinuxParser::UpTime() {
     linestream >> suspendtime >> idletime;
   }
   std::string::size_type sz;
-  //std::cout<<"suspendtime: "<<suspendtime<<"\n";
   long lsuspendedtime = stol(suspendtime, &sz);
-  //std::cout<<"lsuspendedtime = "<<lsuspendedtime<<"\n";
   stream.close();
   return lsuspendedtime;
 }
@@ -221,7 +215,6 @@ string LinuxParser::Command(int pid) {
         linestream>>cmd;
     }
     filestream.close();
-    //cout<<"cmd = "<<cmd<<"\n";
     return cmd;
 }
 

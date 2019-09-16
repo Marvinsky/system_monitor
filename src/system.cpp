@@ -24,7 +24,6 @@ Processor& System::Cpu() { return cpu_; }
 // TODO: Return a container composed of the system's processes
 vector<Process>& System::Processes() {
     auto pids = LinuxParser::Pids();
-    //cout<<"\npids.size() = "<<pids.size()<<"\n";
     for (int pid : pids) {
         if (process_map.find(pid) == process_map.end()) {
             Process p{pid};
@@ -32,7 +31,6 @@ vector<Process>& System::Processes() {
             processes_.emplace_back(p);
         }
     }
-    //cout<<"\nprocesses_.size() = "<<processes_.size()<<"\n";
     //sort
     sort(processes_.begin(), processes_.end(), [](Process &a, Process &b){
         return a.CpuUtilization() > b.CpuUtilization();
