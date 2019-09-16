@@ -24,7 +24,7 @@ int Process::Pid() { return pid; }
 // TODO: Return this process's CPU utilization
 float Process::CpuUtilization() {
     string line;
-    int UTIME = 14, STIME = 14, CUTIME = 14, CSTIME = 17, STARTTIME = 22;
+    int UTIME = 14, STIME = 15, CUTIME = 16, CSTIME = 17, STARTTIME = 22;
     //https://stackoverflow.com/questions/1420426/how-to-calculate-the-cpu-usage-of-a-process-by-pid-in-linux-from-c/1424556#1424556
     unordered_map<int, int> data = {
             {UTIME,     0}, //user mode jiffies
@@ -48,10 +48,9 @@ float Process::CpuUtilization() {
         }
     }
 
-    long long uptime = UpTime();
+    long long uptime = LinuxParser::UpTime();
     long int hertz = sysconf(_SC_CLK_TCK);
-    float total_time = data[UTIME] + data[STIME] +
-            data[CUTIME] + data[CSTIME];
+    float total_time = data[UTIME] + data[STIME] + data[CUTIME] + data[CSTIME];
     long int seconds = uptime - (data[STARTTIME]/hertz);
     float result = ((total_time/hertz)/seconds);
     return result;
